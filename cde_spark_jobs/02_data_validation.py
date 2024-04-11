@@ -67,10 +67,8 @@ thirdBatchDf = spark.read.json("{0}/logistics/thirdbatch/{1}/iotfleet".format(st
 
 # validate geospatial coordinate data to exist:
 
-
 MANDATORY_COLUMNS = ["latitude", "longitude"]
 
 for column in MANDATORY_COLUMNS:
-    try:
-        assert column.upper() in (name.upper() for name in thirdBatchDf.columns)
-        print(f"Column {column} exists : PASSED")
+    column.upper() in (name.upper() for name in thirdBatchDf.columns)
+    print(f"Column {column} exists : PASSED")
