@@ -46,6 +46,14 @@ En esta sección crearás cuatro trabajos de Spark de CDE a través de la interf
    - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "04_merge_batch_user010".
    - Archivo de Aplicación: "04_merge_batches.py" ubicado en tu CDE files resource.
 
+4. Reporte Incremental:
+  - Nombre: nombra esto según tu usuario, por ejemplo, si eres usuario "user010" llámalo "05_inc_report_user010".
+  - Archivo de Aplicación: "05_incremental_report.py" ubicado en tu recurso de Archivos de CDE.
+  - Argumentos: introduce tu nombre de usuario aquí, sin comillas (solo texto), por ejemplo, si eres usuario "user010" introduce "user010" sin comillas.
+  - Archivos y Recursos: elige tu recurso de Archivos de CDE en el menú desplegable (esto debería haber sido preseleccionado para ti).
+  - Deja todos los demás ajustes en sus valores predeterminados y crea el trabajo.
+
+
 ### Resumen
 
 Cada clúster virtual de CDE incluye una instancia integrada de Apache Airflow. Con los flujos de trabajo basados en Airflow, los usuarios pueden especificar su pipeline de Spark utilizando un archivo de configuración Python simple llamado DAG de Airflow.
