@@ -8,9 +8,9 @@
 
 ### Breve Introducción a Spark
 
-Apache Spark es un sistema de procesamiento distribuido de código abierto utilizado para cargas de trabajo de big data. Ha ganado una popularidad extrema como el motor preferido para análisis de datos interactivos y el despliegue de tuberías de producción de ingeniería de datos y aprendizaje automático a escala.
+Apache Spark es un sistema de procesamiento distribuido de código abierto utilizado para cargas de job de big data. Ha ganado una popularidad extrema como el motor preferido para análisis de datos interactivos y el despliegue de tuberías de producción de ingeniería de datos y aprendizaje automático a escala.
 
-En CDE puedes utilizar Spark para explorar datos de forma interactiva a través de Sesiones CDE o desplegar tuberías de ingeniería de datos por lotes mediante Trabajos CDE.
+En CDE puedes utilizar Spark para explorar datos de forma interactiva a través de Sesiones CDE o desplegar tuberías de ingeniería de datos por lotes mediante Jobs de CDE.
 
 ### Lab 1: Ejecución de una Sesión Interactiva de PySpark
 
@@ -150,13 +150,13 @@ distanceDf.filter((distanceDf.device_dist_from_facility < 200) & (distanceDf.eve
 
 ### Lab 2: Creación de CDE Resources y Ejecución de un Job CDE Spark
 
-Hasta ahora has utilizado Sesiones para explorar datos de forma interactiva. CDE también te permite ejecutar código de aplicación Spark en lotes como un Job de CDE. Hay dos tipos de Trabajos CDE: Spark y Airflow. En este Lab crearemos un Job de CDE de tipo Spark y revisaremos Airflow más adelante en la parte 3.
+Hasta ahora has utilizado Sesiones para explorar datos de forma interactiva. CDE también te permite ejecutar código de aplicación Spark en lotes como un Job de CDE. Hay dos tipos de Jobs CDE: Spark y Airflow. En este Lab crearemos un Job de CDE de tipo Spark y revisaremos Airflow más adelante en la parte 3.
 
-El Job de CDE de tipo Spark es una abstracción sobre el comando `spark-submit`. Con el CDE Spark Job, puedes crear una definición de `spark-submit` reutilizable y modular que se guarda en CDE y se puede modificar en la interfaz de usuario de CDE (o mediante la CLI y API de CDE) antes de cada ejecución según tus necesidades. CDE almacena la definición del trabajo para cada ejecución en la interfaz de ejecuciones de trabajos (Job Runs UI), por lo que puedes consultarla incluso después de que tu trabajo haya finalizado.
+El Job de CDE de tipo Spark es una abstracción sobre el comando `spark-submit`. Con el CDE Spark Job, puedes crear una definición de `spark-submit` reutilizable y modular que se guarda en CDE y se puede modificar en la interfaz de usuario de CDE (o mediante la CLI y API de CDE) antes de cada ejecución según tus necesidades. CDE almacena la definición del Job para cada ejecución en la interfaz de ejecuciones de Job (Job Runs UI), por lo que puedes consultarla incluso después de que tu Job haya finalizado.
 
-Además, CDE te permite almacenar directamente artefactos como archivos Python, JARs y otras dependencias, o crear entornos Python y contenedores Docker en CDE como "Recursos CDE". Una vez creados en CDE, los Recursos están disponibles para los Jobs de CDE como componentes modulares de la definición del Job de CDE, que se pueden intercambiar y referenciar según sea necesario para una ejecución de trabajo específica.
+Además, CDE te permite almacenar directamente artefactos como archivos Python, JARs y otras dependencias, o crear entornos Python y contenedores Docker en CDE como "Recursos CDE". Una vez creados en CDE, los Recursos están disponibles para los Jobs de CDE como componentes modulares de la definición del Job de CDE, que se pueden intercambiar y referenciar según sea necesario para una ejecución de Job específica.
 
-Estas características reducen drásticamente la cantidad de esfuerzo normalmente requeridos para gestionar y monitorear jobs Spark en un clúster Spark. Al proporcionar una vista unificada de todas tus ejecuciones junto con los artefactos y dependencias asociados, CDE simplifica los flujos de trabajo de integración continua/entrega continua (CI/CD) y elimina la necesidad de código de unión en tu clúster Spark.
+Estas características reducen drásticamente la cantidad de esfuerzo normalmente requeridos para gestionar y monitorear jobs Spark en un clúster Spark. Al proporcionar una vista unificada de todas tus ejecuciones junto con los artefactos y dependencias asociados, CDE simplifica los flujos de Job de integración continua/entrega continua (CI/CD) y elimina la necesidad de código de unión en tu clúster Spark.
 
 En los siguientes pasos veremos estos beneficios en acción.
 
@@ -193,15 +193,15 @@ Finalmente, observa el contenido de "parameters.conf". Almacenar variables en un
 
 ##### Creación de CDE Spark Job
 
-Ahora que los Recursos de CDE han sido creados, estás listo para crear tu primer Trabajo CDE Spark.
+Ahora que los Recursos de CDE han sido creados, estás listo para crear tu primer CDE Spark Job.
 
-Dirígete a la pestaña de Trabajos CDE y haz clic en "Crear Trabajo". El formulario largo cargado en la página te permite construir un `spark-submit` como un Trabajo CDE Spark, paso a paso.
+Dirígete a la pestaña de Jobs CDE y haz clic en "Create Job". El formulario largo cargado en la página te permite construir un `spark-submit` como un CDE Spark Job, paso a paso.
 
 ![alt text](../../img/part1-cdesparkjob-1.png)
 
 Ingresa los siguientes valores sin comillas en los campos correspondientes. Asegúrate de actualizar el nombre de usuario con tu usuario asignado donde sea necesario:
 
-* Tipo de Trabajo: Spark
+* Tipo de Job: Spark
 * Nombre: 01_fleet_report_userxxx
 * Archivo: Selecciona desde Recurso -> "01_fleet_report.py"
 * Argumentos: userxxx
@@ -215,13 +215,13 @@ El formulario debería lucir similar a esto:
 
 Finalmente, abre la sección de "Opciones Avanzadas".
 
-Observa que tu Recurso de Archivos CDE ya ha sido mapeado al Trabajo CDE para ti.
+Observa que tu Recurso de Archivos CDE ya ha sido mapeado al CDE Job para ti.
 
 Luego, actualiza las Opciones de Cómputo aumentando "Núcleos del Executor" y "Memoria del Executor" de 1 a 2.
 
 ![alt text](../../img/part1-cdesparkjob-3.png)
 
-Finalmente, ejecuta el Trabajo CDE haciendo clic en el ícono "Crear y Ejecutar".
+Finalmente, ejecuta el CDE Job haciendo clic en el ícono "Crear y Ejecutar".
 
 
 ##### CDE Job Run Observability

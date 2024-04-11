@@ -11,7 +11,7 @@ Apache Iceberg es un formato de tabla abierto de alto rendimiento y nativo para 
 
 Iceberg ofrece muchas ventajas. En primer lugar, es un formato de tabla que proporciona numerosas ventajas, incluida la capacidad de estandarizar varios formatos de datos en un sistema de gestión de datos uniforme, un Lakehouse. En el Lakehouse Iceberg, los datos pueden ser consultados con diferentes motores de cómputo, incluidos Apache Impala, Apache Flink, Apache Spark y otros.
 
-Además, Iceberg simplifica análisis de datos y pipelines de ingeniería de datos con características como particionado y evolución de esquemas, viaje en el tiempo (time travel) y captura de datos de cambios (Change Data Capture). En CDE, puedes usar Spark para consultar tablas Iceberg de forma interactiva a través de Sesiones o en pipelines por lotes a través de Trabajos (Jobs).
+Además, Iceberg simplifica análisis de datos y pipelines de ingeniería de datos con características como particionado y evolución de esquemas, viaje en el tiempo (time travel) y captura de datos de cambios (Change Data Capture). En CDE, puedes usar Spark para consultar tablas Iceberg de forma interactiva a través de Sesiones o en pipelines por lotes a través de Jobs.
 
 ### Lab 1: Trabajar con Iceberg en Sesiones CDE
 
