@@ -41,7 +41,6 @@ from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
 from pyspark.sql.types import *
 import sys, random, os, json, random, configparser
-from great_expectations.dataset.sparkdf_dataset import SparkDFDataset
 
 spark = SparkSession \
     .builder \
@@ -68,13 +67,10 @@ thirdBatchDf = spark.read.json("{0}/logistics/thirdbatch/{1}/iotfleet".format(st
 
 # validate geospatial coordinate data to exist:
 
-geThirdBatchDf = SparkDFDataset(thirdBatchDf)
 
 MANDATORY_COLUMNS = ["latitude", "longitude"]
 
 for column in MANDATORY_COLUMNS:
     try:
-        assert geThirdBatchDf.expect_column_to_exist(column).success, f"Mandatory column {column} does not exist: FAILED"
+        assert column.upper() in (name.upper() for name in thirdBatchDf.columns)
         print(f"Column {column} exists : PASSED")
-    except AssertionError as e:
-        print(e)
