@@ -1,9 +1,9 @@
 # Part 2: Apache Iceberg in CDE
 
-* [Una Breve Introducción a Apache Iceberg](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#a-brief-introduction-to-apache-iceberg)
-* [Lab 1: Trabajar con Iceberg en Sesiones CDE](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#lab-1-working-with-iceberg-in-cde-sessions)
-* [Resumen](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#summary)
-* [Enlaces y Recursos Útiles](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#useful-links-and-resources)
+* [Una Breve Introducción a Apache Iceberg](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_02_iceberg.md#una-breve-introducci%C3%B3n-a-apache-iceberg)
+* [Lab 1: Trabajar con Iceberg en Sesiones CDE](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_02_iceberg.md#lab-1-trabajar-con-iceberg-en-sesiones-cde)
+* [Resumen](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_02_iceberg.md#resumen)
+* [Enlaces y Recursos Útiles](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_02_iceberg.md#enlaces-y-recursos-%C3%BAtiles)
 
 ### Una Breve Introducción a Apache Iceberg
 
