@@ -24,7 +24,7 @@ A alto nivel, el flujo de trabajo será similar a las Partes 1 y 2 donde creaste
 
 ##### Creación Jobs de Spark
 
-En esta sección crearás cuatro trabajos de Spark de CDE a través de la interfaz de usuario de CDE Jobs. Es importante que ***no ejecutes los trabajos de Spark cuando los crees***. Si los ejecutas por error, por favor levanta la mano durante el taller y pide ayuda para implementar una solución alternativa.
+En esta sección crearás cuatro trabajos de Spark de CDE a través de la interfaz de usuario de CDE Jobs. Es importante que ***no ejecutes los jobs de Spark cuando los crees***. Si los ejecutas por error, por favor levanta la mano durante el taller y pide ayuda para implementar una solución alternativa.
 
 1. Validación de Datos:
    - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "02_data_val_user010".
