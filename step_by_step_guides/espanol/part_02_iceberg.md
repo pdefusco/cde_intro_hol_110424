@@ -24,8 +24,8 @@ Inicia una nueva Sesión CDE o reutiliza la Sesión que creaste en la Parte 1 si
 ```
 from pyspark.sql.types import Row, StructField, StructType, StringType, IntegerType
 
-storageLocation = "s3a://go01-demo/data"
-username = "user002"
+storageLocation = "s3a://bacpoccdp/data/"
+username = "user005"
 ```
 
 Por default, una tabla Spark creada en Cloudera Data Engineering (CDE) se registra en el Hive Metastore como una tabla externa. Los datos se almacenan en Cloud Storage en uno de varios formatos (parquet, csv, avro, etc.) y su ubicación es rastreada por el Hive Metastore (HMS).
