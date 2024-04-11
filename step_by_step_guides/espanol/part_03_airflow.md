@@ -2,7 +2,7 @@
 
 * [Una Breve Introducción a Airflow](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_03_airflow.md#una-breve-introducci%C3%B3n-a-airflow)
 * [Lab 1: Orquestar Pipeline de Spark con Airflow](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_03_airflow.md#lab-1-orquestar-pipeline-de-spark-con-airflow)
-* [Resumen](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#summary)
+* [Resumen](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_03_airflow.md#resumen)
 * [Useful Links and Resources](https://github.com/pdefusco/cde_intro_hol_110424/blob/main/step_by_step_guides/espanol/part_03_airflow.md#enlaces-y-recursos-%C3%BAtiles)
 
 ### Una Breve Introducción a Airflow
@@ -50,7 +50,7 @@ En esta sección crearás cuatro trabajos de Spark de CDE a través de la interf
 
 Cada clúster virtual de CDE incluye una instancia integrada de Apache Airflow. Con los flujos de trabajo basados en Airflow, los usuarios pueden especificar su pipeline de Spark utilizando un archivo de configuración Python simple llamado DAG de Airflow.
 
-Un DAG básico de Airflow en CDE puede estar compuesto por una combinación de operadores de Hive y Spark que ejecutan automáticamente trabajos en el Almacén de Datos de CDP (CDW) y CDE, respectivamente, con la seguridad y gobernanza subyacentes proporcionadas por SDX (Cloudera Shared Data Experience). 
+Un DAG básico de Airflow en CDE puede estar compuesto por una combinación de operadores de Hive y Spark que ejecutan automáticamente trabajos en el Almacén de Datos de CDP (CDW) y CDE, respectivamente, con la seguridad y gobernanza subyacentes proporcionadas por SDX (Cloudera Shared Data Experience).
 
 Esta integración permite a los usuarios orquestar fácilmente pipelines de datos complejos, combinando tareas de Spark y Hive en un flujo de trabajo unificado y administrado, aprovechando la potencia de Cloudera Data Engineering junto con las capacidades de gestión y seguridad de Cloudera Shared Data Experience (SDX).
 
