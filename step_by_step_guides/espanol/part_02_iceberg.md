@@ -1,25 +1,25 @@
 # Part 2: Apache Iceberg in CDE
 
-* [A Brief Introduction to Apache Iceberg](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#a-brief-introduction-to-apache-iceberg)
-* [Lab 1: Working with Iceberg in CDE Sessions](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#lab-1-working-with-iceberg-in-cde-sessions)
-* [Summary](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#summary)
-* [Useful Links and Resources](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#useful-links-and-resources)
+* [Una Breve Introducción a Apache Iceberg](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#a-brief-introduction-to-apache-iceberg)
+* [Lab 1: Trabajar con Iceberg en Sesiones CDE](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#lab-1-working-with-iceberg-in-cde-sessions)
+* [Resumen](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#summary)
+* [Enlaces y Recursos Útiles](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_02_iceberg.md#useful-links-and-resources)
 
-### A Brief Introduction to Apache Iceberg
+### Una Breve Introducción a Apache Iceberg
 
-Apache Iceberg is a cloud-native, high-performance open table format for organizing petabyte-scale analytic datasets on a file system or object store. Combined with Cloudera Data Platform (CDP), users can build an open data lakehouse architecture for multi-function analytics and to deploy large scale end-to-end pipelines.
+Apache Iceberg es un formato de tabla abierto de alto rendimiento y nativo para organizar conjuntos de datos analíticos a escala de petabytes en un sistema de archivos o almacenamiento de objetos en la nube. Combinado con Cloudera Data Platform (CDP), los usuarios pueden construir una arquitectura de data lakehouse abierta para analítica multifuncional y desplegar pipelines de extremo a extremo a gran escala.
 
-Iceberg provides many advantages. First of all it is a table format that provides many advantages including the ability to standardize various data formats into a uniform data management system, a Lakehouse. In the Iceberg Lakehouse, data can be queries with different compute engines including Apache Impala, Apache Flink, Apache Spark and others.
+Iceberg ofrece muchas ventajas. En primer lugar, es un formato de tabla que proporciona numerosas ventajas, incluida la capacidad de estandarizar varios formatos de datos en un sistema de gestión de datos uniforme, un Lakehouse. En el Lakehouse Iceberg, los datos pueden ser consultados con diferentes motores de cómputo, incluidos Apache Impala, Apache Flink, Apache Spark y otros.
 
-In addition, Iceberg simplifies data analysis and data engineering pipelines with features such as partition and schema evolution, time travel, and Change Data Capture. In CDE you can use Spark to query Iceberg Tables interactively via Sessions or in batch pipelines via Jobs.
+Además, Iceberg simplifica análisis de datos y pipelines de ingeniería de datos con características como particionado y evolución de esquemas, viaje en el tiempo (time travel) y captura de datos de cambios (Change Data Capture). En CDE, puedes usar Spark para consultar tablas Iceberg de forma interactiva a través de Sesiones o en pipelines por lotes a través de Trabajos (Jobs).
 
-### Lab 1: Working with Iceberg in CDE Sessions
+### Lab 1: Trabajar con Iceberg en Sesiones CDE
 
-In Part 1 we used CDE Sessions to explore two datasets and prototype code for a fraud detection Spark Application. In this brief Lab we will load a new batch of transactions from Cloud Storage and leverage Iceberg Lakehouse capabilities in order to test the SQL Merge Into with Spark.
+En la Parte 1 utilizamos Sesiones CDE para explorar dos conjuntos de datos y prototipar código para una aplicación Spark de detección de fraudes. En este breve laboratorio cargaremos un nuevo lote de transacciones desde Cloud Storage y aprovecharemos las capacidades del Lakehouse Iceberg para probar el SQL Merge Into con Spark.
 
-##### Migrate Spark Table to Iceberg Table
+##### Migrar una Tabla de Spark a una Tabla Iceberg
 
-Launch a new CDE Session or reuse the Session you created in Part 1 if it is still running.
+Inicia una nueva Sesión CDE o reutiliza la Sesión que creaste en la Parte 1 si aún está en ejecución.
 
 ```
 from pyspark.sql.types import Row, StructField, StructType, StringType, IntegerType
@@ -28,9 +28,9 @@ storageLocation = "s3a://go01-demo/data"
 username = "user002"
 ```
 
-By default, a Spark table created in CDE is tracked in the Hive Metastore as an External table. Data is stored in Cloud Storage in one of many formats (parquet, csv, avro, etc.) and its location is tracked by the HMS.
+Por default, una tabla Spark creada en Cloudera Data Engineering (CDE) se registra en el Hive Metastore como una tabla externa. Los datos se almacenan en Cloud Storage en uno de varios formatos (parquet, csv, avro, etc.) y su ubicación es rastreada por el Hive Metastore (HMS).
 
-When adopting Iceberg for the first time, tables can be copied or migrated to Iceberg format. A copy implies the recomputation of the whole datasets into an Iceberg table while a Migration only involves the creation of Iceberg metadata in the Iceberg Metadata Layer.   
+Cuando se adopta Iceberg por primera vez, las tablas pueden ser copiadas o migradas al formato Iceberg. Una copia implica la recomputación de todo el conjunto de datos en una tabla Iceberg, mientras que una migración solo implica la creación de metadatos de Iceberg en la capa de Metadatos de Iceberg.
 
 ```
 ## Migrate First Batch Table to Iceberg Table Format
@@ -38,13 +38,13 @@ spark.sql("ALTER TABLE {}.FIRST_BATCH_TABLE UNSET TBLPROPERTIES ('TRANSLATED_TO_
 spark.sql("CALL spark_catalog.system.migrate('{}.FIRST_BATCH_TABLE')".format(username))
 ```
 
-The Iceberg Metadata Layer provides three layers of metadata files whose purpose is to track Iceberg tables as they are modified. The Metadata layer consists of Metadata Files, Manifest Lists and Manifest Files.
+El Metadata Layer de Iceberg proporciona tres capas de archivos de metadatos cuyo propósito es rastrear las tablas Iceberg a medida que son modificadas. La Metadata Layer consta de Archivos de Metadatos (Metadata Files), Listas de Manifiestos (Manifest Lists) y Archivos de Manifiestos (Manifest Files).
 
-The Metadata Layer as a whole stores a version of each dataset by providing pointers to different versions of the data. Among other advantages, this enables Time Travel capabilities on Iceberg tables i.e. the ability to query data as of a particular snapshot or timestamp.
+El Metadata Layer en su conjunto almacena una versión de cada conjunto de datos proporcionando referencias a diferentes versiones de los datos. Entre otras ventajas, esto habilita capacidades de "Time Travel" en las tablas Iceberg, es decir, la capacidad de consultar datos como de una instantánea o marca de tiempo específica.
 
-In the following example you will load a new batch of transactions from Cloud Storage. Then you will insert it into the historical transactions table via the SQL Merge Into statement which not available in Spark SQL unless Iceberg table format is used. Finally, we will query Iceberg Metadata tables and query the data in its PRE-INSERT version with a simple Spark SQL command.
+En el siguiente ejemplo, cargarás un nuevo lote de transacciones desde Cloud Storage. Luego lo insertarás en la tabla de transacciones históricas a través de la declaración SQL Merge Into, la cual no está disponible en Spark SQL a menos que se use el formato de tabla Iceberg. Finalmente, consultaremos las tablas de metadatos de Iceberg y consultaremos los datos en su versión PRE-INSERT con un comando simple de Spark SQL.
 
-As in Part 1, you can just copy and paste the following code snippets into CDE Sessions Notebook cells.
+Al igual que en la Parte 1, simplemente copia y pega los siguientes fragmentos de código en celdas del cuaderno de Sesiones de CDE.
 
 ```
 # PRE-INSERT TIMESTAMP
@@ -95,23 +95,30 @@ df = spark.read.option("as-of-timestamp", int(timestamp*1000)).format("iceberg")
 print(df.count())
 ```
 
-### Summary
+### Resumen
 
-Open data lakehouse on CDP simplifies advanced analytics on all data with a unified platform for structured and unstructured data and integrated data services to enable any analytics use case from ML, BI to stream analytics and real-time analytics. Apache Iceberg is the secret sauce of the open lakehouse.
+El Open Data Lakehouse en CDP simplifica la analítica avanzada sobre todos los datos con una plataforma unificada para datos estructurados y no estructurados, y servicios de datos integrados para habilitar cualquier caso de uso de analítica, desde ML y BI hasta analítica de streaming y en tiempo real. Apache Iceberg es el componente clave del lakehouse abierto.
 
-Apache Iceberg is an open table format designed for large analytic workloads. It supports schema evolution, hidden partitioning, partition layout evolution and time travel. Every table change creates an Iceberg snapshot, this helps to resolve concurrency issues and allows readers to scan a stable table state every time.
+Apache Iceberg es un formato de tabla abierto diseñado para cargas de trabajo analíticas a gran escala. Admite evolución de esquemas, particionamiento oculto, evolución del diseño de particiones y "time travel" (viaje en el tiempo). Cada cambio en la tabla crea una instantánea Iceberg, lo que ayuda a resolver problemas de concurrencia y permite a los lectores escanear un estado estable de la tabla en cada momento.
 
-Iceberg lends itself well to a variety of use cases including Lakehouse Analytics, Data Engineering pipelines, and regulatory compliance with specific aspects of regulations such as GDPR (General Data Protection Regulation) and CCPA (California Consumer Privacy Act) that require being able to delete customer data upon request.
+Iceberg se adapta bien a una variedad de casos de uso, incluyendo analítica de lakehouse, pipelines de ingeniería de datos y cumplimiento normativo con aspectos específicos de regulaciones como GDPR (Reglamento General de Protección de Datos) y CCPA (Ley de Privacidad del Consumidor de California) que requieren la capacidad de eliminar datos de clientes bajo solicitud.
 
-CDE Virtual Clusters provide native support for Iceberg. Users can run Spark workloads and interact with their Iceberg tables via SQL statements. The Iceberg Metadata Layer tracks Iceberg table versions via Snapshots and provides Metadata Tables with snapshot and other useful information. In this Lab we used Iceberg to access the credit card transactions dataset as of a particular timestamp.
+Los Clústeres Virtuales de CDE brindan soporte nativo para Iceberg. Los usuarios pueden ejecutar cargas de trabajo de Spark e interactuar con sus tablas Iceberg a través de declaraciones SQL. La Capa de Metadatos de Iceberg rastrea las versiones de las tablas Iceberg a través de Instantáneas (Snapshots) y proporciona Tablas de Metadatos con información de instantáneas y otros datos útiles. En este laboratorio, utilizamos Iceberg para acceder al conjunto de datos de transacciones con tarjeta de crédito en una marca de tiempo específica.
 
-### Useful Links and Resources
+### Enlaces y Recursos Útiles
 
-If you are curious to learn more about the above features in the context of more advanced use cases, please visit the following references:
+Si tienes curiosidad por aprender más sobre las características mencionadas anteriormente en el contexto de casos de uso más avanzados, visita las siguientes referencias:
 
-* [Apache Iceberg in the Cloudera Data Platform](https://docs.cloudera.com/cdp-public-cloud/cloud/cdp-iceberg/topics/iceberg-in-cdp.html)
-* [Exploring Iceberg Architecture](https://github.com/pdefusco/Exploring_Iceberg_Architecture)
-* [Using Apache Iceberg in Cloudera Data Engineering](https://docs.cloudera.com/data-engineering/cloud/manage-jobs/topics/cde-using-iceberg.html)
-* [Importing and Migrating Iceberg Table in Spark 3](https://docs.cloudera.com/data-engineering/cloud/manage-jobs/topics/cde-iceberg-import-migrate-table.html)
-* [Getting Started with Iceberg and Spark](https://iceberg.apache.org/docs/latest/spark-getting-started/)
-* [Iceberg SQL Syntax](https://iceberg.apache.org/docs/latest/spark-queries/)
+1. **Documentación de Cloudera Data Platform (CDP)**:
+   - Explora la documentación oficial de Cloudera Data Platform para obtener detalles completos sobre las funcionalidades de lakehouse y Iceberg: [Documentación de Cloudera Data Platform](https://docs.cloudera.com/cdp/latest/index.html)
+
+2. **Documentación de Apache Iceberg**:
+   - Sumérgete en la documentación oficial de Apache Iceberg para profundizar en sus capacidades y características avanzadas: [Documentación de Apache Iceberg](https://iceberg.apache.org/documentation/)
+
+3. **Blogs y Artículos de Cloudera**:
+   - Encuentra artículos interesantes y blogs sobre Iceberg y tecnologías relacionadas en el sitio web de Cloudera: [Blogs de Cloudera](https://blog.cloudera.com/)
+
+4. **Foros y Comunidad de Cloudera**:
+   - Únete a la comunidad de Cloudera para hacer preguntas, compartir conocimientos y aprender de otros profesionales en el campo de la analítica de datos: [Comunidad de Cloudera](https://community.cloudera.com/)
+
+Estos recursos te ayudarán a profundizar en el uso de Iceberg, las capacidades del lakehouse abierto en CDP y cómo aprovechar al máximo estas tecnologías en casos de uso avanzados.

@@ -31,7 +31,7 @@ Throughout these labs, you are going to deploy an ELT (Extract, Load, Transform)
 Detailed instructions are provided in the [step_by_step_guides](https://github.com/pdefusco/CDE_Banking_HOL_MKT/tree/main/step_by_step_guides/english) folder.
 
 * [Link to the English Guide](https://github.com/pdefusco/CDE_Banking_HOL_MKT/tree/main/step_by_step_guides/english).
-* [Enlace a la guia en espanol]()
+* [Enlace a la guia en espanol](https://github.com/pdefusco/cde_intro_hol_110424/tree/main/step_by_step_guides/espanol)
 
 ## Other CDP Hands On Lab Workshops
 

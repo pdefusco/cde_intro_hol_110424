@@ -1,101 +1,68 @@
 # Part 3: Apache Airflow in CDE
 
-* [A Brief Introduction to Apache Airflow](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#a-brief-introduction-to-airflow)
-* [Lab 1: Orchestrate Spark Pipeline with Airflow](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#lab-1-orchestrate-spark-pipeline-with-airflow)
-* [Summary](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#summary)
+* [Una Breve Introducción a Airflow](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#a-brief-introduction-to-airflow)
+* [Lab 1: Orquestar Pipeline de Spark con Airflow](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#lab-1-orchestrate-spark-pipeline-with-airflow)
+* [Resumen](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#summary)
 * [Useful Links and Resources](https://github.com/pdefusco/CDE_Banking_HOL_MKT/blob/main/step_by_step_guides/english/part_03_airflow.md#useful-links-and-resources)
 
-### A Brief Introduction to Airflow
+### Una Breve Introducción a Airflow
 
-Apache Airflow is a platform to author, schedule and execute Data Engineering pipelines. It is widely used by the community to create dynamic and robust workflows for batch Data Engineering use cases.
+Apache Airflow es una plataforma para crear, programar y ejecutar pipelines de ingeniería de datos. Es ampliamente utilizado por la comunidad para crear flujos de trabajo dinámicos y robustos para casos de uso de ingeniería de datos por lotes.
 
-The main characteristic of Airflow workflows is that all workflows are defined in Python code. The Python code defining the worflow is stored as a collection of Airflow Tasks organized in a DAG. Tasks are defined by built-in opearators and Airflow modules. Operators are Python Classes that can be instantiated in order to perform predefined, parameterized actions.
+La principal característica de los flujos de trabajo de Airflow es que todos están definidos en código Python. El código Python que define el flujo de trabajo se almacena como una colección de tareas de Airflow organizadas en un DAG (grafo acíclico dirigido). Las tareas están definidas por operadores integrados y módulos de Airflow. Los operadores son clases Python que pueden ser instanciadas para realizar acciones predefinidas y parametrizadas.
 
-CDE embeds Apache Airflow at the CDE Virtual Cluster level. It is automatically deployed for the CDE user during CDE Virtual Cluster creation and requires no maintenance on the part of the CDE Admin. In addition to the core Operators, CDE supports the CDEJobRunOperator and the CDWOperator in order to trigger Spark Jobs. and Datawarehousing queries.
+CDE incorpora Apache Airflow a nivel de Clúster Virtual de CDE. Se despliega automáticamente para el usuario de CDE durante la creación del Clúster Virtual de CDE y no requiere mantenimiento por parte del administrador de CDE. Además de los operadores principales, CDE admite el CDEJobRunOperator y el CDWOperator para ejecutar trabajos de Spark y consultas de Data Warehousing.
 
-### Lab 1: Orchestrate Spark Pipeline with Airflow
+### Lab 1: Orquestar Pipeline de Spark con Airflow
 
-In this lab you will build a pipeline of Spark Jobs to load a new batch of transactions, join it with customer PII data, and create a report of customers who are likely victims of credit card fraud.
+En este laboratorio construirás un pipeline de trabajos de Spark para cargar un nuevo lote de transacciones, unirlo con datos PII de clientes y crear un informe de clientes que probablemente sean víctimas de fraude con tarjetas de crédito.
 
-At a high level, the workflow will be similar to Part 1 and 2 where you created two tables and loaded a new batch of transactions. However, there are two differences:
+A alto nivel, el flujo de trabajo será similar a las Partes 1 y 2 donde creaste dos tablas y cargaste un nuevo lote de transacciones. Sin embargo, hay dos diferencias:
 
-1. The workflow will leverage all the features used up to this point but in unison. For example, Iceberg Time Travel will be used to create an incremental report including only updates within the latest batch rather than the entire historical dataset.
-2. The entire workflow will be orchestrated by Airflow. This will allow you to run your jobs in parallel while implementing robust error handling logic.
+1. El flujo de trabajo aprovechará todas las características utilizadas hasta este punto, pero en conjunto. Por ejemplo, se utilizará Iceberg Time Travel para crear un informe incremental que incluya solo las actualizaciones dentro del último lote en lugar de todo el conjunto de datos históricos.
+2. Todo el flujo de trabajo será orquestado por Airflow. Esto te permitirá ejecutar tus trabajos en paralelo mientras implementas una lógica robusta de manejo de errores.
 
-##### Create Spark Jobs
+##### Creación Jobs de Spark
 
-In this section you will create four CDE Spark Jobs via the CDE Jobs UI. It is important that you ***do not run the Spark Jobs when you create them***. If you do run them by mistake, please raise your hand during the workshop and ask for someone to help you implement a workaround.
+En esta sección crearás cuatro trabajos de Spark de CDE a través de la interfaz de usuario de CDE Jobs. Es importante que ***no ejecutes los trabajos de Spark cuando los crees***. Si los ejecutas por error, por favor levanta la mano durante el taller y pide ayuda para implementar una solución alternativa.
 
-1. Data Validation:
-  - Name: name this after your user e.g. if you are user "user010" call it "02_data_val_user010"
-  - Application File: "02_data_validation.py" located in your CDE Files resource.
-  - Arguments: enter your username here, without quotes (just text) e.g. if you are user "user010" enter "user010" without quotes
-  - Python Environment: choose your CDE Python resource from the dropdown
-  - Files & Resources: choose your CDE Files resource from the dropdown (this should have already been prefilled for you)
-  - Leave all other settings to default values and create the job.
+1. Validación de Datos:
+   - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "02_data_val_user010".
+   - Archivo de Aplicación: "02_data_validation.py" ubicado en tu recurso de Archivos de CDE.
+   - Argumentos: introduce tu nombre de usuario aquí, sin comillas (solo texto), por ejemplo, si eres usuario "user010" introduce "user010" sin comillas.
+   - Ambiente de Python: elige tu recurso de Python de CDE en el menú desplegable.
+   - Archivos y Recursos: elige tu recurso de Archivos de CDE en el menú desplegable (esto debería haber sido preseleccionado para ti).
+   - Deja todos los demás ajustes en sus valores predeterminados y crea el trabajo.
 
-2. Company Data Load:
-  - Name: name this after your user e.g. if you are user "user010" call it "03_co_data_user010"
-  - Application File: "03_co_data.py" located in your CDE Files resource.
-  - Arguments: enter your username here, without quotes (just text) e.g. if you are user "user010" enter "user010" without quotes
-  - Python Environment: choose your CDE Python resource from the dropdown
-  - Files & Resources: choose your CDE Files resource from the dropdown (this should have already been prefilled for you)
-  - Leave all other settings to default values and create the job.
+2. Carga de Datos de la Empresa:
+   - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "03_co_data_user010".
+   - Archivo de Aplicación: "03_co_data.py" ubicado en tu recurso de Archivos de CDE.
+   - Argumentos: introduce tu nombre de usuario aquí, sin comillas (solo texto), por ejemplo, si eres usuario "user010" introduce "user010" sin comillas.
+   - Entorno de Python: elige tu recurso de Python de CDE en el menú desplegable.
+   - Archivos y Recursos: elige tu recurso de Archivos de CDE en el menú desplegable (esto debería haber sido preseleccionado para ti).
+   - Deja todos los demás ajustes en sus valores predeterminados y crea el trabajo.
 
-3. Merge Batches:
-  - Name: name this after your user e.g. if you are user "user010" call it "04_merge_batch_user010"
-  - Application File: "04_merge_batches.py" located in your CDE Files resource.
-  - Arguments: enter your username here, without quotes (just text) e.g. if you are user "user010" enter "user010" without quotes
-  - Files & Resources: choose your CDE Files resource from the dropdown (this should have already been prefilled for you)
-  - Leave all other settings to default values and create the job.  
+3. Fusionar Lotes:
+   - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "04_merge_batch_user010".
+   - Archivo de Aplicación: "04_merge_batches.py" ubicado en tu CDE files resource.
 
-4. Incremental Report:
-  - Name: name this after your user e.g. if you are user "user010" call it "05_inc_report_user010"
-  - Application File: "05_incremental_report.py" located in your CDE Files resource.
-  - Arguments: enter your username here, without quotes (just text) e.g. if you are user "user010" enter "user010" without quotes
-  - Files & Resources: choose your CDE Files resource from the dropdown (this should have already been prefilled for you)
-  - Leave all other settings to default values and create the job.  
+### Enlaces y Recursos Útiles
 
-![alt text](../../img/part3-cdesparkjob-1.png)
+Si estás interesado en aprender más sobre Airflow y su integración con Cloudera Data Engineering (CDE), así como en explorar casos de uso avanzados, te recomiendo revisar los siguientes enlaces y recursos:
 
-##### Create Airflow Job
+   1. **Documentación de Apache Airflow**:
+      - Explora la documentación oficial de Apache Airflow para comprender mejor su funcionamiento y cómo crear flujos de trabajo avanzados: [Documentación de Apache Airflow](https://airflow.apache.org/docs/)
 
-Open the "airflow_dag.py" script located in the "cde_airflow_jobs" folder. Familiarize yourself with the code an notice:
+   2. **Documentación de Cloudera Data Engineering (CDE)**:
+      - Accede a la documentación oficial de Cloudera Data Engineering para aprender más sobre la integración de Airflow con CDE y cómo aprovechar al máximo las capacidades de CDE para ejecutar flujos de trabajo de Spark: [Documentación de Cloudera Data Engineering](https://docs.cloudera.com/data-engineering/cloud/index.html)
 
-* The Python classes needed for the DAG Operators are imported at the top. Notice the CDEJobRunOperator is included to run Spark Jobs in CDE.
-* The "default_args" dictionary includes options for scheduling, setting dependencies, and general execution.
-* Four instances of the CDEJobRunOperator obect is declared with the following arguments:
-  - Task ID: This is the name used by the Airflow UI to recognize the node in the DAG.
-  - DAG: This has to be the name of the DAG object instance declared at line 16.
-  - Job Name: This has to be the name of the Spark CDE Job created in step 1 above.
-* Finally, at the bottom of the DAG, Task Dependencies are declared. With this statement you can specify the execution sequence of DAG tasks.
+   3. **Foros y Comunidad de Apache Airflow**:
+      - Únete a la comunidad de Apache Airflow para hacer preguntas, compartir conocimientos y aprender de otros usuarios: [Comunidad de Apache Airflow](https://community.apache.org/)
 
-Edit the username variable at line 49. Then navigate to the CDE Jobs UI and create a new CDE Job.
+   4. **Foros y Comunidad de Cloudera**:
+      - Participa en la comunidad de Cloudera para discutir sobre Airflow, CDE y otras tecnologías relacionadas con expertos y profesionales del campo: [Comunidad de Cloudera](https://community.cloudera.com/)
 
-Select Airflow as the Job Type, assign a unique CDE Job name based on your user, and then run the Job.  
+   5. **Blogs y Artículos de Cloudera**:
+      - Encuentra artículos interesantes sobre integración de Airflow con CDE y casos de uso avanzados en el blog oficial de Cloudera: [Blogs de Cloudera](https://blog.cloudera.com/)
 
-![alt text](../../img/part3-cdeairflowjob-1.png)
-
-![alt text](../../img/part3-cdeairflowjob-2.png)
-
-Monitor the execution of the pipeline from the Job Runs UI. Notice an Airflow Job will be triggered and successively the four CDE Spark Jobs will run one by one.
-
-While the job is in-flight open the Airflow UI and monitor execution.
-
-![alt text](../../img/part3-cdeairflowjob-3.png)
-
-![alt text](../../img/part3-cdeairflowjob-4.png)
-
-### Summary
-
-Each CDE virtual cluster includes an embedded instance of Apache Airflow. With Airflow based pipelines users can specify their Spark pipeline using a simple python configuration file called the Airflow DAG.
-
-A basic CDE Airflow DAG can be composed of a mix of hive and spark operators that automatically run jobs on CDP Data Warehouse (CDW) and CDE, respectively; with the underlying security and governance provided by SDX.
-
-### Useful Links and Resources
-
-* [Automating Data Pipelines Using Apache Airflow in CDE](https://docs.cloudera.com/data-engineering/cloud/orchestrate-workflows/topics/cde-airflow-dag-pipeline.html)
-* [Using CDE Airflow](https://github.com/pdefusco/Using_CDE_Airflow)
-* [Airflow DAG Arguments Documentation](https://airflow.apache.org/docs/apache-airflow/stable/tutorial.html#default-arguments)
-* [Exploring Iceberg Architecture](https://github.com/pdefusco/Exploring_Iceberg_Architecture)
-* [Enterprise Data Quality at Scale in CDE with Great Expectations and CDE Custom Runtimes](https://community.cloudera.com/t5/Community-Articles/Enterprise-Data-Quality-at-Scale-with-Spark-and-Great/ta-p/378161)
+Estos recursos te ayudarán a profundizar en el uso de Airflow en el contexto de Cloudera Data Engineering, así como a explorar casos de uso avanzados y las mejores prácticas para la orquestación de flujos de trabajo de Spark.
