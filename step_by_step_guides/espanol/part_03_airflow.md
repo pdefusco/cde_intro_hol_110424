@@ -26,7 +26,7 @@ A alto nivel, el flujo de trabajo será similar a las Partes 1 y 2 donde creaste
 
 En esta sección crearás cuatro trabajos de Spark de CDE a través de la interfaz de usuario de CDE Jobs. Es importante que ***no ejecutes los jobs de Spark cuando los crees***. Si los ejecutas por error, por favor levanta la mano durante el taller y pide ayuda para implementar una solución alternativa.
 
-1. Validación de Datos:
+1. **Validación de Datos**:
    - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "02_data_val_user010".
    - Archivo de Aplicación: "02_data_validation.py" ubicado en tu recurso de Archivos de CDE.
    - Argumentos: introduce tu nombre de usuario aquí, sin comillas (solo texto), por ejemplo, si eres usuario "user010" introduce "user010" sin comillas.
@@ -34,7 +34,7 @@ En esta sección crearás cuatro trabajos de Spark de CDE a través de la interf
    - Archivos y Recursos: elige tu recurso de Archivos de CDE en el menú desplegable (esto debería haber sido preseleccionado para ti).
    - Deja todos los demás ajustes en sus valores predeterminados y crea el trabajo.
 
-2. Carga de Datos de la Empresa:
+2. **Carga de Datos de la Empresa**:
    - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "03_co_data_user010".
    - Archivo de Aplicación: "03_co_data.py" ubicado en tu recurso de Archivos de CDE.
    - Argumentos: introduce tu nombre de usuario aquí, sin comillas (solo texto), por ejemplo, si eres usuario "user010" introduce "user010" sin comillas.
@@ -42,16 +42,43 @@ En esta sección crearás cuatro trabajos de Spark de CDE a través de la interf
    - Archivos y Recursos: elige tu recurso de Archivos de CDE en el menú desplegable (esto debería haber sido preseleccionado para ti).
    - Deja todos los demás ajustes en sus valores predeterminados y crea el trabajo.
 
-3. Fusionar Lotes:
+3. **Fusionar Lotes**:
    - Nombre: nómbralo según tu usuario, por ejemplo, si eres usuario "user010" llámalo "04_merge_batch_user010".
    - Archivo de Aplicación: "04_merge_batches.py" ubicado en tu CDE files resource.
 
-4. Reporte Incremental:
+4. **Reporte Incremental**:
   - Nombre: nombra esto según tu usuario, por ejemplo, si eres usuario "user010" llámalo "05_inc_report_user010".
   - Archivo de Aplicación: "05_incremental_report.py" ubicado en tu recurso de Archivos de CDE.
   - Argumentos: introduce tu nombre de usuario aquí, sin comillas (solo texto), por ejemplo, si eres usuario "user010" introduce "user010" sin comillas.
   - Archivos y Recursos: elige tu recurso de Archivos de CDE en el menú desplegable (esto debería haber sido preseleccionado para ti).
   - Deja todos los demás ajustes en sus valores predeterminados y crea el trabajo.
+
+##### Creación Jobs de Airflow
+
+Para crear un Job de Airflow que orqueste los Jobs de Spark que has configurado, sigue estos pasos:
+
+1. **Abrir el script "airflow_dag.py"**:
+   - Navega hasta la carpeta "cde_airflow_jobs" en tu entorno de CDE.
+   - Abre el archivo "airflow_dag.py" y familiarízate con el código. Observa las clases Python importadas necesarias para los operadores DAG. Asegúrate de que el operador `CDEJobRunOperator` esté incluido para ejecutar los jobs de Spark en CDE.
+   - Examina el diccionario `default_args`, que incluye opciones para programación, establecimiento de dependencias y ejecución general.
+
+2. **Definir los operadores CDEJobRunOperator**:
+   - En el archivo "airflow_dag.py", encontrarás instancias del operador `CDEJobRunOperator`. Cada instancia representa un job de Spark que quieres ejecutar como parte del flujo de Airflow.
+   - Asegúrate de ajustar los parámetros de cada operador, incluyendo el `Task ID` (identificador de tarea), el `DAG` (nombre del objeto DAG), y el `Job Name` (nombre del job de Spark CDE creado anteriormente en el paso 1).
+
+3. **Editar la variable de usuario**:
+   - En la línea 49 del archivo "airflow_dag.py", edita la variable `username` para que coincida con tu nombre de usuario de CDE.
+
+4. **Crear un nuevo Job de CDE**:
+   - Navega hasta la interfaz de usuario de CDE Jobs.
+   - Selecciona "Airflow" como el tipo de job.
+   - Asigna un nombre único al job de CDE basado en tu usuario, por ejemplo, "my_airflow_job_user010".
+   - Ejecuta el job.
+
+5. **Monitorizar la ejecución en Airflow**:
+   - Una vez que el job de Airflow se haya iniciado, abre la interfaz de usuario de Airflow para monitorizar la ejecución del DAG y los trabajos de Spark asociados.
+
+Al seguir estos pasos, podrás configurar y ejecutar un flujo de trabajo completo utilizando Airflow para orquestar tus jobs de Spark en Cloudera Data Engineering. Asegúrate de ajustar cualquier parámetro adicional según sea necesario para tu caso específico de uso.
 
 
 ### Resumen
