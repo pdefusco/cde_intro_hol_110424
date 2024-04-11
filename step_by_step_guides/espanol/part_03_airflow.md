@@ -58,7 +58,7 @@ En esta sección crearás cuatro trabajos de Spark de CDE a través de la interf
 Para crear un Job de Airflow que orqueste los Jobs de Spark que has configurado, sigue estos pasos:
 
 1. **Abrir el script "airflow_dag.py"**:
-   - Navega hasta la carpeta "cde_airflow_jobs" en tu entorno de CDE.
+   - Navega hasta la carpeta "cde_airflow_jobs" en tu proyecto local.
    - Abre el archivo "airflow_dag.py" y familiarízate con el código. Observa las clases Python importadas necesarias para los operadores DAG. Asegúrate de que el operador `CDEJobRunOperator` esté incluido para ejecutar los jobs de Spark en CDE.
    - Examina el diccionario `default_args`, que incluye opciones para programación, establecimiento de dependencias y ejecución general.
 
